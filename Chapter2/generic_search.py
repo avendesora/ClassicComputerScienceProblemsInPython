@@ -22,10 +22,7 @@ T = TypeVar('T')
 
 
 def linear_contains(iterable: Iterable[T], key: T) -> bool:
-    for item in iterable:
-        if item == key:
-            return True
-    return False
+    return key in iterable
 
 
 C = TypeVar("C", bound="Comparable")

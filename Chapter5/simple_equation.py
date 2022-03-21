@@ -46,11 +46,10 @@ class SimpleEquation(Chromosome):
                 self.x += 1
             else:
                 self.x -= 1
-        else: # otherwise mutate y
-            if random() > 0.5:
-                self.y += 1
-            else:
-                self.y -= 1
+        elif random() > 0.5:
+            self.y += 1
+        else:
+            self.y -= 1
 
     def __str__(self) -> str:
         return f"X: {self.x} Y: {self.y} Fitness: {self.fitness()}"

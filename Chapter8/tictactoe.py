@@ -70,7 +70,7 @@ class TTTBoard(Board):
     def evaluate(self, player: Piece) -> float:
         if self.is_win and self.turn == player:
             return -1
-        elif self.is_win and self.turn != player:
+        elif self.is_win:
             return 1
         else:
             return 0

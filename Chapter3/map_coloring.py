@@ -36,9 +36,10 @@ class MapColoringConstraint(Constraint[str, str]):
 if __name__ == "__main__":
     variables: List[str] = ["Western Australia", "Northern Territory", "South Australia",
                             "Queensland", "New South Wales", "Victoria", "Tasmania"]
-    domains: Dict[str, List[str]] = {}
-    for variable in variables:
-        domains[variable] = ["red", "green", "blue"]
+    domains: Dict[str, List[str]] = {
+        variable: ["red", "green", "blue"] for variable in variables
+    }
+
     csp: CSP[str, str] = CSP(variables, domains)
     csp.add_constraint(MapColoringConstraint("Western Australia", "Northern Territory"))
     csp.add_constraint(MapColoringConstraint("Western Australia", "South Australia"))

@@ -46,9 +46,10 @@ class SendMoreMoneyConstraint(Constraint[str, int]):
 
 if __name__ == "__main__":
     letters: List[str] = ["S", "E", "N", "D", "M", "O", "R", "Y"]
-    possible_digits: Dict[str, List[int]] = {}
-    for letter in letters:
-        possible_digits[letter] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    possible_digits: Dict[str, List[int]] = {
+        letter: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] for letter in letters
+    }
+
     possible_digits["M"] = [1]  # so we don't get answers starting with a 0
     csp: CSP[str, int] = CSP(letters, possible_digits)
     csp.add_constraint(SendMoreMoneyConstraint(letters))

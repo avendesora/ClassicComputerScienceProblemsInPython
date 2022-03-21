@@ -42,33 +42,25 @@ def generate_segments(num_columns: int, num_rows: int, segment_length: int) -> L
     # generate the vertical segments
     for c in range(num_columns):
         for r in range(num_rows - segment_length + 1):
-            segment: List[Tuple[int, int]] = []
-            for t in range(segment_length):
-                segment.append((c, r + t))
+            segment: List[Tuple[int, int]] = [(c, r + t) for t in range(segment_length)]
             segments.append(segment)
 
     # generate the horizontal segments
     for c in range(num_columns - segment_length + 1):
         for r in range(num_rows):
-            segment = []
-            for t in range(segment_length):
-                segment.append((c + t, r))
+            segment = [(c + t, r) for t in range(segment_length)]
             segments.append(segment)
 
     # generate the bottom left to top right diagonal segments
     for c in range(num_columns - segment_length + 1):
         for r in range(num_rows - segment_length + 1):
-            segment = []
-            for t in range(segment_length):
-                segment.append((c + t, r + t))
+            segment = [(c + t, r + t) for t in range(segment_length)]
             segments.append(segment)
 
     # generate the top left to bottom right diagonal segments
     for c in range(num_columns - segment_length + 1):
         for r in range(segment_length - 1, num_rows):
-            segment = []
-            for t in range(segment_length):
-                segment.append((c + t, r - t))
+            segment = [(c + t, r - t) for t in range(segment_length)]
             segments.append(segment)
     return segments
 
@@ -166,17 +158,16 @@ class C4Board(Board):
         return score
 
     def evaluate(self, player: Piece) -> float:
-        total: float = 0
-        for segment in C4Board.SEGMENTS:
-            total += self._evaluate_segment(segment, player)
-        return total
+        return sum(
+            self._evaluate_segment(segment, player) for segment in C4Board.SEGMENTS
+        )
 
     def __repr__(self) -> str:
         display: str = ""
         for r in reversed(range(C4Board.NUM_ROWS)):
             display += "|"
             for c in range(C4Board.NUM_COLUMNS):
-                display += f"{self.position[c][r]}" + "|"
+                display += f"{self.position[c][r]}|"
             display += "\n"
         return display
 

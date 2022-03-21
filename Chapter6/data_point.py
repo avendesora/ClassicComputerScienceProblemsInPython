@@ -33,9 +33,11 @@ class DataPoint:
         return sqrt(sum(differences))
 
     def __eq__(self, other: object) -> bool:
-        if not isinstance(other, DataPoint):
-            return NotImplemented
-        return self.dimensions == other.dimensions
+        return (
+            self.dimensions == other.dimensions
+            if isinstance(other, DataPoint)
+            else NotImplemented
+        )
 
     def __repr__(self) -> str:
         return self._originals.__repr__()

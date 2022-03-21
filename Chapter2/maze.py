@@ -41,7 +41,10 @@ class Maze:
         self.start: MazeLocation = start
         self.goal: MazeLocation = goal
         # fill the grid with empty cells
-        self._grid: List[List[Cell]] = [[Cell.EMPTY for c in range(columns)] for r in range(rows)]
+        self._grid: List[List[Cell]] = [
+            [Cell.EMPTY for _ in range(columns)] for _ in range(rows)
+        ]
+
         # populate the grid with blocked cells
         self._randomly_fill(rows, columns, sparseness)
         # fill the start and goal locations in
@@ -56,10 +59,7 @@ class Maze:
 
     # return a nicely formatted version of the maze for printing
     def __str__(self) -> str:
-        output: str = ""
-        for row in self._grid:
-            output += "".join([c.value for c in row]) + "\n"
-        return output
+        return "".join("".join([c.value for c in row]) + "\n" for row in self._grid)
 
     def goal_test(self, ml: MazeLocation) -> bool:
         return ml == self.goal
@@ -68,11 +68,11 @@ class Maze:
         locations: List[MazeLocation] = []
         if ml.row + 1 < self._rows and self._grid[ml.row + 1][ml.column] != Cell.BLOCKED:
             locations.append(MazeLocation(ml.row + 1, ml.column))
-        if ml.row - 1 >= 0 and self._grid[ml.row - 1][ml.column] != Cell.BLOCKED:
+        if ml.row >= 1 and self._grid[ml.row - 1][ml.column] != Cell.BLOCKED:
             locations.append(MazeLocation(ml.row - 1, ml.column))
         if ml.column + 1 < self._columns and self._grid[ml.row][ml.column + 1] != Cell.BLOCKED:
             locations.append(MazeLocation(ml.row, ml.column + 1))
-        if ml.column - 1 >= 0 and self._grid[ml.row][ml.column - 1] != Cell.BLOCKED:
+        if ml.column >= 1 and self._grid[ml.row][ml.column - 1] != Cell.BLOCKED:
             locations.append(MazeLocation(ml.row, ml.column - 1))
         return locations
 
@@ -93,7 +93,7 @@ def euclidean_distance(goal: MazeLocation) -> Callable[[MazeLocation], float]:
     def distance(ml: MazeLocation) -> float:
         xdist: int = ml.column - goal.column
         ydist: int = ml.row - goal.row
-        return sqrt((xdist * xdist) + (ydist * ydist))
+        return sqrt(xdist**2 + ydist**2)
     return distance
 
 

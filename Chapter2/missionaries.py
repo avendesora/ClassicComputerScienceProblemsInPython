@@ -73,7 +73,7 @@ class MCState:
 
 
 def display_solution(path: List[MCState]):
-    if len(path) == 0: # sanity check
+    if not path: # sanity check
         return
     old_state: MCState = path[0]
     print(old_state)

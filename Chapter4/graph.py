@@ -82,10 +82,10 @@ class Graph(Generic[V]):
 
     # Make it easy to pretty-print a Graph
     def __str__(self) -> str:
-        desc: str = ""
-        for i in range(self.vertex_count):
-            desc += f"{self.vertex_at(i)} -> {self.neighbors_for_index(i)}\n"
-        return desc
+        return "".join(
+            f"{self.vertex_at(i)} -> {self.neighbors_for_index(i)}\n"
+            for i in range(self.vertex_count)
+        )
 
 
 if __name__ == "__main__":
