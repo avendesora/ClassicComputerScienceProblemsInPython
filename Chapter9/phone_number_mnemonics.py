@@ -29,9 +29,10 @@ phone_mapping: Dict[str, Tuple[str, ...]] = {"1": ("1",),
 
 
 def possible_mnemonics(phone_number: str) -> Iterable[Tuple[str, ...]]:
-    letter_tuples: List[Tuple[str, ...]] = []
-    for digit in phone_number:
-        letter_tuples.append(phone_mapping.get(digit, (digit,)))
+    letter_tuples: List[Tuple[str, ...]] = [
+        phone_mapping.get(digit, (digit,)) for digit in phone_number
+    ]
+
     return product(*letter_tuples)
 
 

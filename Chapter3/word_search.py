@@ -28,7 +28,7 @@ class GridLocation(NamedTuple):
 
 def generate_grid(rows: int, columns: int) -> Grid:
     # initialize grid with random letters
-    return [[choice(ascii_uppercase) for c in range(columns)] for r in range(rows)]
+    return [[choice(ascii_uppercase) for _ in range(columns)] for _ in range(rows)]
 
 
 def display_grid(grid: Grid) -> None:
@@ -74,9 +74,10 @@ class WordSearchConstraint(Constraint[str, List[GridLocation]]):
 if __name__ == "__main__":
     grid: Grid = generate_grid(9, 9)
     words: List[str] = ["MATTHEW", "JOE", "MARY", "SARAH", "SALLY"]
-    locations: Dict[str, List[List[GridLocation]]] = {}
-    for word in words:
-        locations[word] = generate_domain(word, grid)
+    locations: Dict[str, List[List[GridLocation]]] = {
+        word: generate_domain(word, grid) for word in words
+    }
+
     csp: CSP[str, List[GridLocation]] = CSP(words, locations)
     csp.add_constraint(WordSearchConstraint(words))
     solution: Optional[Dict[str, List[GridLocation]]] = csp.backtracking_search()

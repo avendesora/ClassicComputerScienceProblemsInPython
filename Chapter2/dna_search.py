@@ -38,10 +38,7 @@ my_gene: Gene = string_to_gene(gene_str)
 
 
 def linear_contains(gene: Gene, key_codon: Codon) -> bool:
-    for codon in gene:
-        if codon == key_codon:
-            return True
-    return False
+    return key_codon in gene
 
 
 acg: Codon = (Nucleotide.A, Nucleotide.C, Nucleotide.G)

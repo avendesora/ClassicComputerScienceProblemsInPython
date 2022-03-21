@@ -25,11 +25,13 @@ class Layer:
         self.previous_layer: Optional[Layer] = previous_layer
         self.neurons: List[Neuron] = []
         # the following could all be one large list comprehension, but gets a bit long that way
-        for i in range(num_neurons):
-            if previous_layer is None:
-                random_weights: List[float] = []
-            else:
-                random_weights = [random() for _ in range(len(previous_layer.neurons))]
+        for _ in range(num_neurons):
+            random_weights = (
+                []
+                if previous_layer is None
+                else [random() for _ in range(len(previous_layer.neurons))]
+            )
+
             neuron: Neuron = Neuron(random_weights, learning_rate, activation_function, derivative_activation_function)
             self.neurons.append(neuron)
         self.output_cache: List[float] = [0.0 for _ in range(num_neurons)]

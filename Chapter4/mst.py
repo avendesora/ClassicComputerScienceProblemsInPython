@@ -23,7 +23,7 @@ WeightedPath = List[WeightedEdge] # type alias for paths
 
 
 def total_weight(wp: WeightedPath) -> float:
-    return sum([e.weight for e in wp])
+    return sum(e.weight for e in wp)
 
 
 def mst(wg: WeightedGraph[V], start: int = 0) -> Optional[WeightedPath]:
